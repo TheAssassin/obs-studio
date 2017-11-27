@@ -45,7 +45,7 @@ jobs:
       before_script:
         - CI/install-dependencies-linux.sh
       script:
-        - CI/build-appimage.bash
+        - CI/build-appimage.sh
       after_success:
         - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
         - bash upload.sh ./Mumble*.AppImage*
