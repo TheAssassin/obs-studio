@@ -33,6 +33,24 @@ matrix:
       before_install: "./CI/install-dependencies-linux.sh"
       before_script: "./CI/before-script-linux.sh"
 
+jobs:
+  include:
+    - stage: Create AppImage
+      before_install:
+        - sudo add-apt-repository ppa:beineri/opt-qt593-trusty -y
+        - sudo apt-get update -qq
+      install:
+        - sudo apt-get -y install tree qt59base qt59svg qt59translations qt59tools
+        - source /opt/qt*/bin/qt*-env.sh
+      before_script:
+        - CI/install-dependencies-linux.sh
+        - CI/before-script-linux.sh
+      script: CI/build-appimage.bash
+      after_success:
+        - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
+        - bash upload.sh ./Mumble*.AppImage*
+
+
 script: cd ./build && make -j4 && cd -
 
 deploy:
