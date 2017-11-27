@@ -38,9 +38,11 @@ jobs:
     - stage: Create AppImage
       before_install:
         - sudo add-apt-repository ppa:beineri/opt-qt593-trusty -y
+        - sudo sh -c "echo 'deb http://download.opensuse.org/repositories/home:/TheAssassin:/AppImageLibraries/xUbuntu_14.04/ /' > /etc/apt/sources.list.d/curl-httponly.list"
+        - wget -nv https://download.opensuse.org/repositories/home:TheAssassin:AppImageLibraries/xUbuntu_14.04/Release.key -O- | sudo apt-key add -
         - sudo apt-get update -qq
       install:
-        - sudo apt-get -y install tree qt59base qt59svg qt59translations qt59tools
+        - sudo apt-get -y install tree qt59base qt59svg qt59translations qt59tools curl libcurl4-gnutls-dev libcurl3-gnutls libcurl3
         - source /opt/qt*/bin/qt*-env.sh
       before_script:
         - CI/install-dependencies-linux.sh
