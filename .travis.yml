@@ -44,8 +44,8 @@ jobs:
         - source /opt/qt*/bin/qt*-env.sh
       before_script:
         - CI/install-dependencies-linux.sh
-        - CI/before-script-linux.sh
-      script: CI/build-appimage.bash
+      script:
+        - CI/build-appimage.bash
       after_success:
         - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
         - bash upload.sh ./Mumble*.AppImage*
