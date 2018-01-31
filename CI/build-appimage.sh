@@ -3,6 +3,9 @@
 set -x
 set -e
 
+# need to detect version identifier before cd-ing into build directory
+export VERSION=$(git rev-parse --short HEAD)
+
 # use RAM disk if possible
 if [ -d /dev/shm ]; then
     TEMP_BASE=/dev/shm
@@ -49,7 +52,6 @@ unset QT_PLUGIN_PATH
 unset LD_LIBRARY_PATH
 
 # add Git commit ID to AppImage filename
-export VERSION=$(git rev-parse --short HEAD)
 squashfs-root/AppRun AppDir/usr/share/applications/obs.desktop -verbose=3 -bundle-non-qt-libs
 squashfs-root/AppRun AppDir/usr/share/applications/obs.desktop -verbose=3
 
